@@ -1,25 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import NavBar from "./components/Navbar";
+import Footer from "./components/Footer";
+import JumbotronDisplay from "./components/Jumbotron";
+import {Route,BrowserRouter as Router, Switch} from "react-router-dom";
+import Box from '@mui/material/Box';
+import Fab from '@mui/material/Fab';
+import CallIcon from '@mui/icons-material/Call';
+import {useState,useEffect} from "react";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Router>
+      <NavBar />
+      <JumbotronDisplay />
+      <Box sx={{ '& > :not(style)': { m: 1 } }}>
+       <Fab size="small" color="secondary" aria-label="add">
+        <CallIcon />
+       </Fab>
+      </Box>
+      <Footer />
+    </Router>
     </div>
   );
 }
-
 export default App;
