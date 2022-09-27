@@ -20,6 +20,7 @@ $ pip install django djangorestframework django-cors-headers coverage
 5. The request that React app makes are succesfully responded by the Django REST frame work
 
 
+# `Running FrontEnd React`
 In the project directory, you can run:
 
 ### `npm start`
