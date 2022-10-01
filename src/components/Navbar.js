@@ -12,7 +12,7 @@ import { faAddressCard,faCalendarCheck,faBell,faRightToBracket} from '@fortaweso
 
 function NavBar() {
   return (
-    <Navbar bg="dark" expand="lg" variant="dark" sticky="top">
+    <Navbar bg="light" expand="lg" variant="light" sticky="top">
       <Container fluid>
         <Navbar.Brand href="#"><img className="imgLogo" src={logo} alt="LogoImage" /></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -22,10 +22,10 @@ function NavBar() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link ><FontAwesomeIcon icon={faAddressCard} color="white"/>&nbsp;&nbsp;Alumni</Nav.Link>
-            <Nav.Link ><FontAwesomeIcon icon={faCalendarCheck} color="white"/>&nbsp;&nbsp;Events</Nav.Link>
-            <Nav.Link ><FontAwesomeIcon icon={faBell} color="white"/>&nbsp;&nbsp;Notifications</Nav.Link>
-            <Nav.Link ><FontAwesomeIcon icon={faRightToBracket} color="white"/>&nbsp;&nbsp;Register</Nav.Link>
+            <Nav.Link ><FontAwesomeIcon icon={faAddressCard} color="black"/>&nbsp;&nbsp;Alumni</Nav.Link>
+            <Nav.Link ><FontAwesomeIcon icon={faCalendarCheck} color="black"/>&nbsp;&nbsp;Events</Nav.Link>
+            <Nav.Link ><FontAwesomeIcon icon={faBell} color="black"/>&nbsp;&nbsp;Notifications</Nav.Link>
+            <Nav.Link ><FontAwesomeIcon icon={faRightToBracket} color="black"/>&nbsp;&nbsp;Register</Nav.Link>
           </Nav>
           <Form className="d-flex">
             <Form.Control

@@ -5,8 +5,8 @@ import JumbotronDisplay from "./components/Jumbotron";
 import {Route,BrowserRouter as Router, Switch} from "react-router-dom";
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
-import CallIcon from '@mui/icons-material/Call';
-import {useState,useEffect} from "react";
+// import {useState,useEffect} from "react";
+import SignIn from "./components/credentials/Login";
 
 function App() {
   return (
@@ -14,11 +14,8 @@ function App() {
     <Router>
       <NavBar />
       <JumbotronDisplay />
-      <Box sx={{ '& > :not(style)': { m: 1 } }}>
-       <Fab size="small" color="secondary" aria-label="add">
-        <CallIcon />
-       </Fab>
-      </Box>
+      <SignIn />
+      <hr/>
       <Footer />
     </Router>
     </div>

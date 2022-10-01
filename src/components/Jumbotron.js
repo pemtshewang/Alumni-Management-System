@@ -11,7 +11,7 @@ import {BrowserRouter as Router,
         Switch,
         Link
       } from "react-router-dom";
-import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
 import { Button as MuiButton } from '@mui/material';
 
 function JumbotronDisplay(){
@@ -28,11 +28,11 @@ function JumbotronDisplay(){
         <Carousel.Caption>
           <h3 className="justify-content-center h3-slide"><q>Nobody is bothered about its institutions more than its Alumni</q></h3>
           <p className="lead">Nalanda</p>
-        <Stack spacing={2} direction="row" 
+        <Box spacing={2} direction="row" 
           justifyContent="center"
-          alignItems="center">
+          >
           <MuiButton  variant="contained">Get Started</MuiButton>
-        </Stack>
+        </Box>
         </Carousel.Caption>
       </Carousel.Item>
          {/* 2nd Slide  */}
@@ -45,6 +45,11 @@ function JumbotronDisplay(){
         <Carousel.Caption>
           <h3 className="h3-slide">Alumni and Management RTM</h3>
           <p className="lead">Discuss Plans and Ideas about our Alumni</p>
+          <Box spacing={2} direction="row" 
+                justifyContent="center"
+                >
+                <MuiButton  variant="contained">participate</MuiButton>
+          </Box>
         </Carousel.Caption>
       </Carousel.Item>
          {/* 3rd Slide  */}
@@ -59,6 +64,11 @@ function JumbotronDisplay(){
           <p className="lead">
             See the Achievements and Success of Alumni
           </p>
+          <Box spacing={2} direction="row" 
+                justifyContent="center"
+                >
+                <MuiButton  variant="contained">Achievement Gallery</MuiButton>
+          </Box>
         </Carousel.Caption>
       </Carousel.Item>
           {/* end */}
