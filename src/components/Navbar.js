@@ -4,11 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import logo from "../assests/logo.png";
 import 'bootstrap/dist/css/bootstrap.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAddressCard,faCalendarCheck,faBell,faRightToBracket} from '@fortawesome/free-solid-svg-icons'
+import NotificationBadge from "./Notifications/NotificationIcon";
+import IconButton from '@mui/material/IconButton';
 
 function NavBar() {
   return (
@@ -24,7 +25,7 @@ function NavBar() {
           >
             <Nav.Link ><FontAwesomeIcon icon={faAddressCard} color="black"/>&nbsp;&nbsp;Alumni</Nav.Link>
             <Nav.Link ><FontAwesomeIcon icon={faCalendarCheck} color="black"/>&nbsp;&nbsp;Events</Nav.Link>
-            <Nav.Link ><FontAwesomeIcon icon={faBell} color="black"/>&nbsp;&nbsp;Notifications</Nav.Link>
+            <Nav.Link><NotificationBadge />&nbsp;&nbsp;Notifications</Nav.Link>
             <Nav.Link ><FontAwesomeIcon icon={faRightToBracket} color="black"/>&nbsp;&nbsp;Register</Nav.Link>
           </Nav>
           <Form className="d-flex">

@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Alert from '@mui/material/Alert';
 
 function Copyright(props) {
   return (
@@ -28,7 +27,6 @@ function Copyright(props) {
 }
 
 //setting an alert to show error if not in while logging in
-
 const theme = createTheme();
 
 export default function SignIn() {
