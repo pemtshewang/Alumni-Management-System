@@ -6,13 +6,16 @@ import {Route,BrowserRouter as Router, Switch} from "react-router-dom";
 // import {useState,useEffect} from "react";
 import EventSection from './components/Events/Events';
 import ProfileList from './components/Profiles/ProfileList';
+import { Typography } from '@mui/material';
 function App() {
   return (
     <div className="App">
     <Router>
       <NavBar />
       <JumbotronDisplay />
-      <ProfileList/>
+      <Typography variant="h2" color="primary">
+        This component will be rendered by the backend logic
+      </Typography>
       <hr/>
       <Footer />
     </Router>
