@@ -1,40 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
-.imgLogo{
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+.imgLogo {
   width: 70px;
   height: 70px;
 }
 
-#navbarScroll{
-  padding-top:10px;
+#navbarScroll {
+  padding-top: 10px;
   align-self: flex-start;
 }
 
-.navbar-brand{
-  padding:0 !important;
+.navbar-brand {
+  padding: 0 !important;
 }
 
-.navbar{
-  padding:0 !important;
+.navbar {
+  padding: 0 !important;
   box-shadow: 2px 4px 5px gray;
 }
 
-.carousel{
-  margin-top:17px;
+.carousel {
+  margin-top: 17px;
   box-shadow: 3px 4px 5px black;
   height: 80vh;
 }
 
-.carousel img{
+.carousel img {
   filter: brightness(50%);
-  height:80vh;
+  height: 80vh;
 }
-.carousel-inner{
+.carousel-inner {
   align-items: center;
 }
-.h3-slide{
+.h3-slide {
   font-family: "Roboto", sans-serif;
 }
 
-.css-s9a2lh{
-  padding:5px 10px !important;
+.css-s9a2lh {
+  padding: 5px 10px !important;
+}
+
+.profile-avatar__text {
+  color: inherit;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  text-decoration: none;
 }

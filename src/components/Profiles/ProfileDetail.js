@@ -2,7 +2,6 @@ import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -13,24 +12,24 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Link from "@mui/material/Link";
 
-export default function PersonalDetail() {
+export default function PersonalDetail(props) {
   return (
     <Box sx={{display:"flex",justifyContent:"center"}} padding={7}>
-      <Card sx={{width:"250px",boxShadow:"1px 2px 5px grey",}} >
+      <Card sx={{width:"550px",boxShadow:"1px 2px 5px grey",}} >
         <Box sx={{ justifyContent: "center", display: "flex", mt: 2 }}>
             <Avatar
               alt="Remy Sharp"
-              src="https://source.unsplash.com/random"
+              src={props.data.profile_image}
               sx={{ width: 100, height: 100, padding:0}}
             />
         </Box>
             <CardContent>
               <Stack direction="column" spacing={1} sx={{ mt: 2 ,}} alignItems="center">
               <Typography gutterBottom variant="h5" component="div">
-                Pem Tshewang
+                {props.data.first_name} {props.data.last_name}
               </Typography>
               <Typography variant="body2" color="text.primary">
-                <q>We are all one</q>
+                Email: {props.data.email}
               </Typography>
                 <Typography variant="body3" color="text.secondary">
                     Graduation Year : 2021
@@ -42,6 +41,7 @@ export default function PersonalDetail() {
                     Company : Google
                 </Typography>
                 <Typography variant="body3" color="text.secondary">
+                    Phone Number: {props.data.phone_number}
                 </Typography>
             </Stack>
                 <hr/>

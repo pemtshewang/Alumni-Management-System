@@ -16,23 +16,18 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 export default function PersonalDialogBox(props) {
-  const [open, setOpen] = React.useState(props.state);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div>
       <BootstrapDialog
-        onClose={handleClose}
+        onClose={props.handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={props.open}
       >
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={props.handleClose}>
             <CloseIcon />
           </IconButton>
-          <PersonalDetail />
+          <PersonalDetail data={props.data} />
       </BootstrapDialog>
     </div>
   );

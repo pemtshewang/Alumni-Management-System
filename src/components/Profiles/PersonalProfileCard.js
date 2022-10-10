@@ -16,27 +16,26 @@ import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import PersonalDialogBox from "./PersonalDialogBox";
 
-export default function PersonalProfileCard() {
+export default function PersonalProfileCard(props) {
   const [profile,showProfile] = React.useState(false);
   function toggleView(){
     showProfile(prevState => !prevState);
-    return profile;
   }
   return (
     <div>
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 345 , boxShadow:"0px 0px 3px 3px grey", margin:"0 auto"}}>
       <Box sx={{ justifyContent: "center", display: "flex", mt: 2 }}>
         <Avatar
           alt="Remy Sharp"
-          src="https://source.unsplash.com/random"
+          src={props.data.profile_image}
           sx={{ width: 100, height: 100 }}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Pem Tshewang
+          <Typography gutterBottom variant="h6" component="p">
+            {props.data.first_name} {props.data.last_name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Full Stack Developer
+            {props.data.email}
           </Typography>
           <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
             <Link
@@ -63,14 +62,14 @@ export default function PersonalProfileCard() {
             >
               <AccountBoxIcon />
             </IconButton>
-            <Button variant="contained" onClick={() => toggleView()}>
+            <Button variant="contained" onClick={toggleView}>
               Show More
             </Button>
           </Stack>
         </CardContent>
       </Box>
     </Card>
-    {profile && <PersonalDialogBox state={true}/>}
+    {profile && <PersonalDialogBox data={props.data} open={profile} handleClose={toggleView}/>}
     </div>
   );
 }
