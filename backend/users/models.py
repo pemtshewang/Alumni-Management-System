@@ -1,6 +1,5 @@
-import email
-from email.policy import default
-from enum import unique
+from enum import auto
+from .managers import AlumniUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
 
@@ -13,13 +12,13 @@ class Alumni(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=200)
     phone_number = models.CharField(max_length=10, unique=True)
     is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-    # objects = 
+    objects = AlumniUserManager()
 
-    USER_NAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name","phone_number"]
-
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["first_name","last_name","phone_number"]
 
     def __str__(self) -> str:
         return self.email
