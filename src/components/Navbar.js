@@ -24,6 +24,7 @@ import { useState } from "react";
 import { search } from "../api/authServices";
 import { useSnackbar } from "notistack";
 import { useEffect } from "react";
+import SearchResultsBox from "../utils/SearchUtils/SearchResultsFound";
 
 function BasicMenu() {
   const { isLoggedIn } = useContext(UserContext);
@@ -79,7 +80,10 @@ function NavBar() {
   const { enqueueSnackbar } = useSnackbar();
   const [results, setResults] = useState([]);
   const [pressed, setPressed] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  function handleClose() {
+    setOpen(false);
+  }
   function changePressedState() {
     setPressed(true);
   }
@@ -102,6 +106,7 @@ function NavBar() {
       // displayed here
       pressed && enqueueSnackbar(message, { variant: status });
       pressed && setPressed(false);
+      results.length > 0 && setOpen(true); 
     },[results,enqueueSnackbar]); 
   function handleChange(event) {
     setFormData((prevFormData) => {
@@ -113,6 +118,7 @@ function NavBar() {
   }
   return (
     <React.Fragment>
+      {open && <SearchResultsBox results={results} open={open} handleClose={handleClose}/>}
       <Navbar bg="light" expand="lg" variant="light" sticky="top">
         <Container fluid>
           <Navbar.Brand as={NavLink} to="/">
