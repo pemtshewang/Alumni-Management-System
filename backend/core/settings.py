@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'alumni',
     'events',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -42,7 +43,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ####################RESTFRAMEWORK SETUP####################
 REST_FRAMEWORK ={
     'DEFAULT_PERMISSION_CLASSES':[
@@ -176,5 +176,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"media/")
 MEDIA_URL = "/media/"
 ######################################################################
 
-###################DJOSER Authentication#####################
-########################################################
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend',
+     'rest_framework.filters.SearchFilter'] }

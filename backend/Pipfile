@@ -10,6 +10,7 @@ django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
 djoser = "*"
+django-filter = "*"
 
 [dev-packages]
 

@@ -30,7 +30,6 @@ function App() {
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/events/create/" element={isLoggedIn?<EventCreate />:<Login/>} />
           </Routes>
-          <hr />
           <>
             <Footer />
           </>

@@ -31,17 +31,14 @@ export default function PersonalDetail(props) {
               <Typography variant="body2" color="text.primary">
                 Email: {props.data.email}
               </Typography>
-                <Typography variant="body3" color="text.secondary">
-                    Graduation Year : 2021
+                <Typography variant="body3" color="text.primary">
+                    Graduation Year : {props.data.graduation_year}
                 </Typography>
-                <Typography variant="body3" color="text.secondary">
-                    Job : Backend Developer
+                <Typography variant="body3" color="text.primary">
+                    Job : {props.data.job_profile}
                 </Typography>
-                <Typography variant="body3" color="text.secondary">
-                    Company : Google
-                </Typography>
-                <Typography variant="body3" color="text.secondary">
-                    Phone Number: {props.data.phone_number}
+                <Typography variant="body3" color="text.primary">
+                    Company : {props.data.company}
                 </Typography>
             </Stack>
                 <hr/>

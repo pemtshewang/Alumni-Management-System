@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class AlumniListSerializer(ModelSerializer):
     class Meta:
         model = Alumni
-        fields = ["first_name","last_name","email","company","job_profile","profile_image"]
+        fields = ["first_name","last_name","email","graduation_year","company","job_profile","profile_image"]
         read_only_fields = [*fields]
 
 class AlumniProfileDetailEditSerializer(ModelSerializer):
@@ -14,8 +14,8 @@ class AlumniProfileDetailEditSerializer(ModelSerializer):
         model = Alumni
         fields = "__all__"
         exclude = ["is_staff","date_joined","is_active"]
-####################For Token Authorization####################
 
+####################For Token Authorization####################
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)

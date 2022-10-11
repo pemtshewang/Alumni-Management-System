@@ -96,7 +96,7 @@ export default function FullScreenDialog(props) {
                 <Typography variant="body1" color="text.primary">
                   Organizer
                   <Typography variant="body2" color="text.secondary">
-                    {props.data.author}
+                    {props.hostName}
                   </Typography>
                 </Typography>
               </CardContent>

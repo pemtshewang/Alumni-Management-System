@@ -42,6 +42,9 @@ export default function EventSection() {
               justifyContent="center"
               alignItems="center"
               width="inherit"
+              columnGap={4}
+              rowGap={4}
+              sx={{ margin:"0 auto" }}
             >
               {eventsList.map((data) => {
                 return(

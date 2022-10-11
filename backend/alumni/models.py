@@ -9,9 +9,10 @@ class Alumni(AbstractBaseUser,PermissionsMixin):
     cid_Number = models.CharField(max_length=100,unique=True)
     email = models.EmailField(max_length=100,unique=True)
     password = models.CharField(max_length=100, null=False)
-    company = models.CharField(max_length=100)
+    company = models.CharField(max_length=100,default="No company")
     job_profile = models.CharField(max_length=100)
     profile_image = models.ImageField(upload_to="users/",default="users/default.png")
+    graduation_year = models.DateField(null=False)
     is_staff = models.BooleanField(default=False) # access to admin site
     is_superuser = models.BooleanField(default=True)# access to all permissions
     is_active = models.BooleanField(default=True) 

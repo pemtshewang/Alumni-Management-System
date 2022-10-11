@@ -1,4 +1,5 @@
 import axiosInstance from "./axios";
+import { useState} from "react";
 
 const login = (email, password) => {
   return axiosInstance
@@ -25,4 +26,16 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
-export { login, logout, getCurrentUser };
+const search = (params)=>{
+  params.replace(/\s/g, "");
+  return axiosInstance
+  .get(`alumni/?search=${params}`)
+  .then((response) => {
+    return response.data;
+  })
+  .catch((error) => {
+    return false;
+  });
+}
+
+export { login, logout, getCurrentUser, search};

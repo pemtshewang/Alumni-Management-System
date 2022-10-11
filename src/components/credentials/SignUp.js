@@ -113,7 +113,6 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
@@ -152,7 +151,6 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
-                  autoComplete="email"
                   onChange={handleChange("email")}
                   inputProps={{ type: "email", maxLength: 50, minLength: 5 }}
                 />
@@ -275,7 +273,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="center">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

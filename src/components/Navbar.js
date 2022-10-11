@@ -20,9 +20,13 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
+import { useState } from "react";
+import { search } from "../api/authServices";
+import { useSnackbar } from "notistack";
+import { useEffect } from "react";
 
 function BasicMenu() {
-  const {isLoggedIn} = useContext(UserContext);
+  const { isLoggedIn } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -60,7 +64,7 @@ function BasicMenu() {
         </MenuItem>
         <Divider sx={{ backgroundColor: "black" }} />
         <MenuItem onClick={handleClose}>
-          <Nav.Link as={NavLink} to={isLoggedIn?"/events/create/":"/login"}>
+          <Nav.Link as={NavLink} to={isLoggedIn ? "/events/create/" : "/login"}>
             Create an Event
           </Nav.Link>
         </MenuItem>
@@ -70,51 +74,94 @@ function BasicMenu() {
 }
 
 function NavBar() {
-  const {isLoggedIn} = useContext(UserContext);
+  const [formData, setFormData] = useState({ search: "" });
+  const { isLoggedIn } = useContext(UserContext);
+  const { enqueueSnackbar } = useSnackbar();
+  const [results, setResults] = useState([]);
+  const [pressed, setPressed] = useState(false);
+
+  function changePressedState() {
+    setPressed(true);
+  }
+  // Function to handleSubmit
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+      setResults(await search(formData.search));
+    };
+    //async function to handle search
+    useEffect(() => {
+      const status = results.length > 0 ? "success" : "error";
+      const message =
+        results.length > 0
+          ? results.length > 1
+            ? `${results.length} results found`
+            : `${results.length} result found`
+          : "No results found";
+      // Important here
+      // search results are stored in results
+      // displayed here
+      pressed && enqueueSnackbar(message, { variant: status });
+      pressed && setPressed(false);
+    },[results,enqueueSnackbar]); 
+  function handleChange(event) {
+    setFormData((prevFormData) => {
+      return {
+        ...prevFormData,
+        [event.target.name]: event.target.value,
+      };
+    });
+  }
   return (
-    <Navbar bg="light" expand="lg" variant="light" sticky="top">
-      <Container fluid>
-        <Navbar.Brand as={NavLink} to="/">
-          <img className="imgLogo" src={logo} alt="LogoImage" />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
-            <Nav.Link as={NavLink} to="/alumni">
-              <FontAwesomeIcon icon={faAddressCard} color="black" />
-              &nbsp;&nbsp;Alumni
-            </Nav.Link>
-            &nbsp;&nbsp;
-            <BasicMenu />
-            <Nav.Link as={NavLink} to="/notifications">
-              <NotificationBadge />
-              &nbsp;&nbsp;Notifications
-            </Nav.Link>
-            {isLoggedIn? (
-              <ProfileAvatarMenu />
-            ) : (
-              <Nav.Link as={NavLink} to="/login">
-                <FontAwesomeIcon icon={faRightToBracket} color="black" />
-                &nbsp;&nbsp;Register
+    <React.Fragment>
+      <Navbar bg="light" expand="lg" variant="light" sticky="top">
+        <Container fluid>
+          <Navbar.Brand as={NavLink} to="/">
+            <img className="imgLogo" src={logo} alt="LogoImage" />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll">
+            <Nav
+              className="me-auto my-2 my-lg-0"
+              style={{ maxHeight: "100px" }}
+              navbarScroll
+            >
+              <Nav.Link as={NavLink} to="/alumni">
+                <FontAwesomeIcon icon={faAddressCard} color="black" />
+                &nbsp;&nbsp;Alumni
               </Nav.Link>
-            )}
-          </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search Alumni"
-              className="me-2"
-              aria-label="Search"
-            />
-            <Button variant="outline-success">Search</Button>
-          </Form>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+              &nbsp;&nbsp;
+              <BasicMenu />
+              <Nav.Link as={NavLink} to="/notifications">
+                <NotificationBadge />
+                &nbsp;&nbsp;Notifications
+              </Nav.Link>
+              {isLoggedIn ? (
+                <ProfileAvatarMenu />
+              ) : (
+                <Nav.Link as={NavLink} to="/login">
+                  <FontAwesomeIcon icon={faRightToBracket} color="black" />
+                  &nbsp;&nbsp;Login
+                </Nav.Link>
+              )}
+            </Nav>
+            <Form className="d-flex" onSubmit={handleSubmit}>
+              <Form.Control
+                type="search"
+                name="search"
+                placeholder="Search Alumni"
+                className="me-2"
+                aria-label="Search"
+                onChange={handleChange}
+                required
+              />
+              <Button type="submit" variant="outline-success" onClick={changePressedState}>
+                Search
+              </Button>
+            </Form>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </React.Fragment>
   );
 }
 export default NavBar;
