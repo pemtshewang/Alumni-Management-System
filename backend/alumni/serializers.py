@@ -1,4 +1,3 @@
-from statistics import mode
 from rest_framework.serializers import ModelSerializer
 from .models import Alumni
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -36,5 +35,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class AlumniCreateSerializer(ModelSerializer):
     class Meta:
         model = Alumni
-
+        fields = ["first_name","last_name","cid_Number","email","password","graduation_year","company","job_profile","profile_image"]
+    def create(self, validated_data):
+        return  Alumni.objects.create_user(**validated_data)
 ########################################################

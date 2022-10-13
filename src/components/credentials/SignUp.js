@@ -20,10 +20,12 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { signup } from "../../api/authServices";
 
 function Copyright(props) {
   return (
@@ -50,23 +52,35 @@ const styles = {
 
 export default function SignUp() {
   const [value, setvalue] = React.useState(dayjs(new Date()));
+  const [image, setImage] = React.useState(null);
   const [FormData, setFormData] = React.useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
+    cid_Number: "",
     password: "",
     confirmPassword: "",
     showPassword: false,
     showConfirmPassword: false,
-    dateofgraduation: "",
+    graduation_year: "",
+    job_profile: "",
   });
 
   const handleDateChange = (newvalue) => {
     setvalue(newvalue);
   };
 
-  const handleChange = (prop) => (event) => {
-    setFormData({ ...FormData, [prop]: event.target.value });
+  function handleChange(event){
+    if([event.target.name] == "profile_image"){
+      setImage({image : event.target.files});
+    }else{
+    setFormData({ ...FormData, 
+      [event.target.name]: event.target.value });
+    }
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   const handleClickShowPassword = () => {
@@ -77,14 +91,17 @@ export default function SignUp() {
     });
   };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
   //my
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(FormData);
+    if (FormData.password !== FormData.confirmPassword) {
+      alert("Password and Confirm Password does not match");
+      return;
+    }
+    setFormData({ ...FormData ,
+      graduation_year:value.format("YYYY-MM-DD").toString(),
+    });
+    signup(FormData,image);
   };
 
   return (
@@ -113,12 +130,12 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name="firstName"
+                  name="first_name"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  onChange={handleChange("firstName")}
+                  onChange={handleChange}
                   autoFocus
                 />
               </Grid>
@@ -128,20 +145,20 @@ export default function SignUp() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
+                  name="last_name"
                   autoComplete="family-name"
-                  onChange={handleChange("lastName")}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="cidInput"
+                  name="cid_Number"
                   label="Citizen ID Number"
                   type="text"
                   id="cidInput"
-                  onChange={handleChange("cidInput")}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,18 +168,8 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
-                  onChange={handleChange("email")}
+                  onChange={handleChange}
                   inputProps={{ type: "email", maxLength: 50, minLength: 5 }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="phoneNumber"
-                  label="Phone Number"
-                  type="number"
-                  fullWidth
-                  required
-                  name="phoneNumber"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -178,17 +185,18 @@ export default function SignUp() {
                     value={value}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
+                    name="graduation_year"
                   />
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
-                  name="jobTitle"
+                  name="job_profile"
                   label="Job Title"
                   type="text"
                   id="jobTitle"
-                  onChange={handleChange("jobTitle")}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -201,7 +209,7 @@ export default function SignUp() {
                     name="password"
                     type={FormData.showPassword ? "text" : "password"}
                     value={FormData.password}
-                    onChange={handleChange("password")}
+                    onChange={handleChange}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -233,7 +241,7 @@ export default function SignUp() {
                     name="confirmPassword"
                     type={FormData.showConfirmPassword ? "text" : "password"}
                     value={FormData.confirmPassword}
-                    onChange={handleChange("confirmPassword")}
+                    onChange={handleChange}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -253,6 +261,22 @@ export default function SignUp() {
                     label="Confirm Password"
                   />
                 </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography component="b" variant="b" sx={{ml:1}}>
+                  People can know you better by your picture
+                  <IconButton
+                    color="primary"
+                    aria-label="upload picture"
+                    component="label"
+                    sx={{ border: 1, borderColor: "grey.500",ml: 1 }}
+                    onChange={handleChange}
+                    name="profile_image"
+                  >
+                    <input name="profile_image" hidden accept="image/*" type="file" />
+                    <PhotoCamera />
+                  </IconButton>
+                </Typography>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
