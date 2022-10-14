@@ -49,7 +49,7 @@ export default function EventCard(props) {
           avatar={
             <Avatar
               aria-label="recipe"
-              src={hostDetail ? hostDetail.profile_image : null}
+              src={"http://localhost:8000"+hostDetail?.profile_image}
               variant="rounded"
             ></Avatar>
           }

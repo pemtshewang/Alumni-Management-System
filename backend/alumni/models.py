@@ -11,7 +11,7 @@ class Alumni(AbstractBaseUser,PermissionsMixin):
     password = models.CharField(max_length=100, null=False)
     company = models.CharField(max_length=100,default="No company")
     job_profile = models.CharField(max_length=100,null=True,default="Not Working")
-    profile_image = models.ImageField(upload_to="users/",default="users/default.png")
+    profile_image = models.ImageField(upload_to="users/",default="users/default.png",max_length=500)
     graduation_year = models.DateField(null=False)
     is_staff = models.BooleanField(default=False) # access to admin site
     is_superuser = models.BooleanField(default=True)# access to all permissions

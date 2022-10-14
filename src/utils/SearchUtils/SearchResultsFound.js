@@ -25,6 +25,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function SearchResultsBox(props) {
   const [open, setOpen] = React.useState(false);
+  const [data, setData] = React.useState(null);
 
   function handleClickOpen() {
     setOpen(true);
@@ -56,36 +57,51 @@ export default function SearchResultsBox(props) {
             bgcolor: "background.paper",
           }}
         >
-          {props.results.map((data) => {
+          {props.results.map((data, index) => {
             return (
-              <ListItem
-                maxWidth={300}
-                sx={{ border: "2px groove lightblue", borderRadius:2, marginBlock: 5 }}
-                alignItems="flex-start"
-              >
-                <ListItemAvatar>
-                  <Avatar alt={data.first_name} src={data.profile_image} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={data.first_name + " " + data.last_name}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        {"Graduation Year: " + data.graduation_year}
-                      </Typography>
-                    </React.Fragment>
-                  }
-                />
-                <Stack direction="row" justifyContent="right" spacing={1}>
-                  <Button variant="outlined" onClick={handleClickOpen}>See More</Button>
-                </Stack>
-                {open && <PersonalDialogBox data={data} open={open} handleClose={handleClose} />}
-              </ListItem>
+              <>
+                <ListItem
+                  key={data.user_id}
+                  sx={{
+                    border: "2px groove lightblue",
+                    borderRadius: 2,
+                    marginBlock: 5,
+                  }}
+                  alignItems="flex-start"
+                >
+                  <ListItemAvatar>
+                    <Avatar alt={data.first_name} src={data.profile_image} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={data.first_name + " " + data.last_name}
+                    secondary={
+                      <React.Fragment>
+                        <Typography
+                          sx={{ display: "inline" }}
+                          component="span"
+                          variant="body2"
+                          color="text.primary"
+                        >
+                          {"Graduation Year: " + data.graduation_year}
+                        </Typography>
+                      </React.Fragment>
+                    }
+                  />
+                  <Stack direction="row" justifyContent="right" spacing={1}>
+                    <Button variant="outlined" onClick={handleClickOpen}>
+                      See More
+                    </Button>
+                    {open && (
+                      <PersonalDialogBox
+                        data={data}
+                        index={index}
+                        open={open}
+                        handleClose={handleClose}
+                      />
+                    )}
+                  </Stack>
+                </ListItem>
+              </>
             );
           })}
         </List>

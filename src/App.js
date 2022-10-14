@@ -14,11 +14,12 @@ import { useMemo, useState } from "react";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [serverError,setServerError] = useState(false);
 
   const providerValue = useMemo(() => ({ isLoggedIn, setIsLoggedIn }),[isLoggedIn, setIsLoggedIn ]);
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn , user, setUser }}>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn , user, setUser , serverError, setServerError}}>
       <Router>
         <div className="App">
           <NavBar />

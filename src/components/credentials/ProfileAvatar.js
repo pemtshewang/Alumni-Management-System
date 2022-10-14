@@ -11,6 +11,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import UserLogout from './Logout';
 import { getCurrentUser } from '../../api/authServices';
+import { UserContext } from '../../context/UserContext';
 export default function ProfileAvatarMenu() {
   const data = getCurrentUser();
   const [openLogout, setOpenLogout] = React.useState(false);
@@ -23,6 +24,7 @@ export default function ProfileAvatarMenu() {
     setOpenLogout(false);
   }
 
+  console.log(data.profile_image,data.first_name);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {

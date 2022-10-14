@@ -98,9 +98,9 @@ function NavBar() {
       const message =
         results.length > 0
           ? results.length > 1
-            ? `${results.length} results found`
-            : `${results.length} result found`
-          : "No results found";
+            ? `${results.length} Alumni found`
+            : `${results.length} Alumni found`
+          : "No Alumni found with associated field name";
       // Important here
       // search results are stored in results
       // displayed here

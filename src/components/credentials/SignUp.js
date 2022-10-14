@@ -25,7 +25,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { signup } from "../../api/authServices";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import { UserContext } from "../../context/UserContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import axiosInstance from "../../api/axios";
+import { useEffect } from "react";
 
 function Copyright(props) {
   return (
@@ -49,11 +56,13 @@ const styles = {
   borderRadius: "5px",
   paddingBottom: "",
 };
-
 export default function SignUp() {
-  const [value, setvalue] = React.useState(dayjs(new Date()));
+  const { setIsLoggedIn } = useContext(UserContext);
+  const [value, setvalue] = React.useState(dayjs("2021-01-01"));
+  const { serverError, setServerError } = React.useContext(UserContext);
   const [image, setImage] = React.useState(null);
-  const [FormData, setFormData] = React.useState({
+  const [errorMessages, setErrorMessages] = React.useState([]);
+  const [tempFormData, setTempFormData] = React.useState({
     first_name: "",
     last_name: "",
     email: "",
@@ -63,6 +72,7 @@ export default function SignUp() {
     showPassword: false,
     showConfirmPassword: false,
     graduation_year: "",
+    company: "",
     job_profile: "",
   });
 
@@ -70,40 +80,96 @@ export default function SignUp() {
     setvalue(newvalue);
   };
 
-  function handleChange(event){
-    if([event.target.name] == "profile_image"){
-      setImage({image : event.target.files});
-    }else{
-    setFormData({ ...FormData, 
-      [event.target.name]: event.target.value });
+  function handleChange(event) {
+    if ([event.target.name] == "profile_image") {
+      setImage({ image: event.target.files });
+    } else {
+      setTempFormData({
+        ...tempFormData,
+        [event.target.name]: event.target.value,
+      });
     }
-  };
-
+  }
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
   const handleClickShowPassword = () => {
-    setFormData({
-      ...FormData,
-      showPassword: !FormData.showPassword,
-      showConfirmPassword: !FormData.showConfirmPassword,
+    setTempFormData({
+      ...tempFormData,
+      showPassword: !tempFormData.showPassword,
+      showConfirmPassword: !tempFormData.showConfirmPassword,
     });
   };
-
+  async function login(email,password) {
+    const response = await axiosInstance.post("auth/login/", {
+      email: email,
+      password: password,
+    });
+    if (response.data.access) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setIsLoggedIn(true);
+      navigate("/");
+    }
+  }
+  useEffect(() => {
+    login();
+  }, []);
+  // Function to handleSubmit
+  // Important here
   //my
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (FormData.password !== FormData.confirmPassword) {
+    if (tempFormData.password !== tempFormData.confirmPassword) {
       alert("Password and Confirm Password does not match");
       return;
     }
-    setFormData({ ...FormData ,
-      graduation_year:value.format("YYYY-MM-DD").toString(),
+    setTempFormData({
+      ...tempFormData,
+      graduation_year: value.format("YYYY-MM-DD"),
     });
-    signup(FormData,image);
+    let formdata = new FormData();
+    formdata.append("first_name", tempFormData.first_name);
+    formdata.append("last_name", tempFormData.last_name);
+    formdata.append("email", tempFormData.email);
+    formdata.append("password", tempFormData.password);
+    formdata.append("cid_Number", tempFormData.cid_Number);
+    formdata.append("graduation_year", tempFormData.graduation_year);
+    formdata.append("job_profile", tempFormData.job_profile);
+    formdata.append("company", tempFormData.company);
+    formdata.append("profile_image", image.image[0]);
+    //
+    return axios
+      .post("http://localhost:8000/api/alumni/register/", formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        //useContext for server error
+        setServerError(false);
+        localStorage.removeItem("error_message");
+        login(tempFormData.email, tempFormData.password);
+      })
+      .catch((error) => {
+        //useContext for server error
+        setServerError(true);
+        localStorage.setItem(
+          "error_message",
+          JSON.stringify(error.response.data)
+        );
+        let errorMap = new Map(
+          Object.entries(JSON.parse(JSON.stringify(error.response.data)))
+        );
+        let errorArr = [];
+        errorMap.forEach((key, value) => {
+          errorArr.push(key[0]);
+        });
+        setErrorMessages(errorArr);
+        window.scrollTo(0, 0);
+      });
   };
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" style={styles}>
@@ -121,6 +187,14 @@ export default function SignUp() {
           <Typography component="b" variant="b">
             Sign up
           </Typography>
+          {serverError &&
+            errorMessages.map((msg) => {
+              return (
+                <Stack sx={{ width: "100%", mt: 1 }} spacing={2}>
+                  <Alert severity="error">{msg.toUpperCase()}</Alert>
+                </Stack>
+              );
+            })}
           <Box
             component="form"
             noValidate
@@ -181,7 +255,7 @@ export default function SignUp() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label="Pick Date"
-                    inputFormat="DD/MM/YYYY"
+                    inputFormat="YYYY-MM-DD"
                     value={value}
                     onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
@@ -196,6 +270,16 @@ export default function SignUp() {
                   label="Job Title"
                   type="text"
                   id="jobTitle"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  name="company"
+                  label="Company"
+                  type="text"
+                  id="company"
                   onChange={handleChange}
                 />
               </Grid>
@@ -263,17 +347,22 @@ export default function SignUp() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <Typography component="b" variant="b" sx={{ml:1}}>
+                <Typography component="b" variant="b" sx={{ ml: 1 }}>
                   People can know you better by your picture
                   <IconButton
                     color="primary"
                     aria-label="upload picture"
                     component="label"
-                    sx={{ border: 1, borderColor: "grey.500",ml: 1 }}
+                    sx={{ border: 1, borderColor: "grey.500", ml: 1 }}
                     onChange={handleChange}
                     name="profile_image"
                   >
-                    <input name="profile_image" hidden accept="image/*" type="file" />
+                    <input
+                      name="profile_image"
+                      hidden
+                      accept="image/*"
+                      type="file"
+                    />
                     <PhotoCamera />
                   </IconButton>
                 </Typography>

@@ -14,11 +14,13 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../api/authServices";
 import { UserContext } from "../../context/UserContext";
+import { useEffect } from "react";
+import axiosInstance from "../../api/axios";
 //setting an alert to show error if not in while logging in
 const theme = createTheme();
 
 export default function SignIn() {
-  const { setIsLoggedIn } = useContext(UserContext);
+  const { setIsLoggedIn, isLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
   // style for container
@@ -27,14 +29,26 @@ export default function SignIn() {
     password: "",
   });
 
+  async function login(){
+    const  response = await axiosInstance.post('auth/login/', {
+      email: formData.email,
+      password: formData.password,
+    })
+    if (response.data.access) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+      setIsLoggedIn(true);
+      navigate("/");
+    }
+  }
+  useEffect(() => {
+    login();
+  }, []);
   // Function to handleSubmit
-  const handleSubmit = async(event) => {
-    // Important here
+  // Important here
+  function handleSubmit(event) {
     event.preventDefault();
-    await login(formData.email, formData.password);
-    setIsLoggedIn(true);
-    navigate("/");
-  };
+    login();
+  }
 
   function handleChange(event) {
     setFormData((prevFormData) => {
@@ -62,7 +76,7 @@ export default function SignIn() {
             <Typography component="p" variant="p">
               Sign in
             </Typography>
-            <Box component="form"  sx={{ mt: 1 }}>
+            <Box component="form" sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required

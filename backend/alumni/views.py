@@ -8,12 +8,14 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework import filters
 from rest_framework.permissions import AllowAny
-from rest_framework.parsers import MultiPartParser,FormParser,JSONParser
+from rest_framework.parsers import MultiPartParser,FormParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
+from django.shortcuts import get_object_or_404
 
-class AlumniListViewSet(ReadOnlyModelViewSet):
+class AlumniListRetrieveViewSet(ModelViewSet):
     queryset = Alumni.objects.all()
     authentication_classes = []
     permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
@@ -22,6 +24,12 @@ class AlumniListViewSet(ReadOnlyModelViewSet):
     def get_queryset(self):
         queryset_list = Alumni.objects.all()
         return queryset_list.filter(is_staff=False)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Alumni.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = AlumniListSerializer(user)
+        return Response(serializer.data)
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -50,4 +58,5 @@ class AlumniRegisterView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

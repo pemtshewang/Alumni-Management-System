@@ -11,29 +11,17 @@ import EventIcon from "@mui/icons-material/Event";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { useContext } from "react";
-import { UserContext } from "../../../context/UserContext";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { IconButton } from "@mui/material";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { getCurrentUser } from "../../../api/authServices";
 import { useNavigate } from "react-router-dom";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      <Link color="inherit" href="">
-        Alumni Management System
-      </Link>{" "}
-    </Typography>
-  );
-}
+import { useSnackbar } from "notistack";
+import axios from "axios";
 
 const theme = createTheme();
 
@@ -44,31 +32,96 @@ const styles = {
 };
 
 export default function EventCreate() {
-  const navigate = useNavigate();
-  const {isLoggedIn} = useContext(UserContext);
-  const [FormData, setFormData] = React.useState({
+  const [image, setImage] = React.useState(null);
+  const [formData, setFormData] = React.useState({
     title: "",
     description: "",
-    date: null,
-    time: null,
-    author: "",
+    date: dayjs("2018-01-01T00:00:00.000Z"),
+    time: dayjs("2018-01-01T00:00:00.000Z"),
+    author: getCurrentUser().id,
   });
+  //handle the submitted data using axios
+  const [dateValue, setDateValue] = React.useState(
+    dayjs("2018-01-01T00:00:00.000Z")
+  );
+  const [timeValue, setTimeValue] = React.useState(
+    dayjs("2018-01-01T00:00:00.000Z")
+  );
 
- const [value, setValue] = React.useState(dayjs(new Date()));
-
-  const handleDateTimeChange= (newValue) => {
-    setValue(newValue);
+  const handleDateChange = (newValue) => {
+    setDateValue(newValue);
   };
-
-  const handleChange = (prop) => (event) => {
-    setFormData({ ...FormData, [prop]: event.target.value });
+  const handleTimeChange = (newValue) => {
+    setTimeValue(newValue);
   };
+  //date and time 
+  // handle the date and time change using useeffect hook
+  React.useEffect(() => {
+    setFormData({
+      ...formData,
+      date: dateValue,
+      time: timeValue,
+    });
+  }, [dateValue,timeValue]);
 
+  function handleChange(event) {
+    if ([event.target.name] == "image") {
+      setImage({ image: event.target.files });
+    } else {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+      });
+    }
+  }
+
+  const {enqueueSnackbar} = useSnackbar();
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(FormData);
-  };
-
+    setFormData({
+      ...formData,
+      date: dateValue.format("YYYY-MM-DD"),
+      time: timeValue.format("HH:mm"),
+      });
+    let Formdata = new FormData();
+    Formdata.append("title", formData.title);
+    Formdata.append("description", formData.description);
+    Formdata.append("date", formData.date);
+    Formdata.append("time", formData.time);
+    image && Formdata.append("image", image.image[0]);
+    Formdata.append("author", formData.author);
+    
+    return axios
+      .post("http://localhost:8000/api/events/create-event/",Formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "authorization": `Bearer ${getCurrentUser().access}`}
+        }
+      )
+      .then((response) => {
+        //useContext for server error
+        enqueueSnackbar("Event created successfully", {
+          variant: "success",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },  
+        });
+        navigate("/events");
+      })
+      .catch((error) => {
+        //useContext for server error
+        enqueueSnackbar("Event submission failed, Retry Submitting", {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center",
+          },  
+        });
+        window.scrollTo(0, 0);
+      });
+    }
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" style={styles}>
@@ -101,7 +154,7 @@ export default function EventCreate() {
                   fullWidth
                   id="title"
                   label="Event Name"
-                  onChange={handleChange("title")}
+                  onChange={handleChange}
                   autoFocus
                 />
               </Grid>
@@ -114,16 +167,15 @@ export default function EventCreate() {
                   id="description"
                   label="Event Description"
                   name="description"
-                  autoComplete="event-description"
-                  onChange={handleChange("description")}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <TimePicker
                     label="Time"
-                    value={value}
-                    onChange={handleDateTimeChange}
+                    value={timeValue}
+                    onChange={handleTimeChange}
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
@@ -132,9 +184,9 @@ export default function EventCreate() {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DesktopDatePicker
                     label="Pick Date"
-                    inputFormat="DD/MM/YYYY"
-                    value={value}
-                    onChange={handleDateTimeChange}
+                    inputFormat="YYYY-MM-DD"
+                    value={dateValue}
+                    onChange={handleDateChange}
                     renderInput={(params) => <TextField {...params} />}
                   />
                 </LocalizationProvider>
@@ -146,8 +198,31 @@ export default function EventCreate() {
                   type="text"
                   fullWidth
                   required
-                  name="venue"
+                  name="location"
+                  onChange={handleChange}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <Typography component="b" variant="b" sx={{ ml: 1 }}>
+                    Attach a photo for the event
+                    <IconButton
+                      color="primary"
+                      aria-label="upload picture"
+                      component="label"
+                      sx={{ border: 1, borderColor: "grey.500", ml: 1 }}
+                      onChange={handleChange}
+                    >
+                      <input
+                        name="image"
+                        hidden
+                        accept="image/*"
+                        type="file"
+                      />
+                      <PhotoCamera />
+                    </IconButton>
+                  </Typography>
+                </Box>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel

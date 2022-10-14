@@ -9,9 +9,11 @@ import { logout} from '../../api/authServices';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
+import { useSnackbar } from 'notistack';
 
 export default function UserLogout(props) {
 
+  const { enqueueSnackbar} = useSnackbar();
   const { setIsLoggedIn } = useContext(UserContext);
 
   const navigate = useNavigate();
@@ -38,6 +40,7 @@ export default function UserLogout(props) {
             setIsLoggedIn(false);
             props.handleClose();
             navigate("/");
+            enqueueSnackbar("Successfully Logged Out",{variant:"success",anchorOrigin:{vertical:"top",horizontal:"center"}});
             }}>Logout</Button>
           <Button onClick={props.handleClose} autoFocus>
             Cancel
