@@ -21,6 +21,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
 
 // import NotificationsGetter from './NotificationsGetter';
 
@@ -38,7 +39,6 @@ async function getNotifications() {
 
 function AlignItemsList(props) {
   const {isLoggedIn} = useContext(UserContext);
-
   return (
     isLoggedIn ? (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
@@ -65,6 +65,7 @@ function AlignItemsList(props) {
             }
           />
           <Divider variant="inset" component="li" />
+          <Button variant="outlined">Mark as Read</Button>
         </ListItem>)
       })}
     </List>): <Typography variant="h6" component="div">You are not logged in</Typography>

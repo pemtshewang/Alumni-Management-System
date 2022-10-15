@@ -11,10 +11,11 @@ import {BrowserRouter as Router,
       } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Button as MuiButton } from '@mui/material';
+import Typography from "@mui/material/Typography";
 
 function JumbotronDisplay(){
   return(
-    <Carousel fade>
+    <Carousel fade variant="light" >
           {/* start */}
           {/* 1st slide */}
       <Carousel.Item>
