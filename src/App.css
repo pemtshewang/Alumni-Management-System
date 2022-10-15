@@ -49,6 +49,8 @@
   letter-spacing: 0.00938em;
   text-decoration: none;
 }
-body{
-  background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+/* body{ background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%); } */
+.navButton{
+  margin: 0 auto;
+  padding-top: 32px;
 }

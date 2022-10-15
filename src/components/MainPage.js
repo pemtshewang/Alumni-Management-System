@@ -7,9 +7,12 @@ import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { Typography } from "@mui/material";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import Avatar from "@mui/material/Avatar";
+import thrompon from "../assests/thrompon.jpg";
+import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const Clock = (props) => {
   const [date, setDate] = React.useState(new Date());
@@ -73,6 +76,7 @@ const itemData = [
 ];
 
 function MainPage() {
+  const navigate = useNavigate();
   return (
     <ParallaxProvider>
       <Parallax speed={-5}>
@@ -84,7 +88,7 @@ function MainPage() {
         <Parallax
           speed={10}
           style={{
-            padding: "50px",
+            paddingTop: "50px",
           }}
         >
           <Grid
@@ -133,44 +137,86 @@ function MainPage() {
           </Grid>
         </Parallax>
       </div>
-      <Parallax speed={-10} translateY={[-8,-14]}>
+      <Parallax speed={-10} translateY={[-8, -14]}>
+        <Typography
+          sx={{ textAlign: "center", fontFamily: "consolas" }}
+          marginBottom="35px"
+          variant="h4"
+          component="h2"
+          color="black"
+        >
+          Popular Cstian Alumni
+        </Typography>
         <Grid2 container coloumns={12} sx={{ margin: "0 auto" }}>
-          <Grid2 item xs={4} sx={{display:"flex",justifyContent:"center"}}>
+          <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
             <Card border="dark" style={{ width: "18rem" }}>
-              <Card.Header>Header</Card.Header>
+              <Card.Header style={{ margin: "0 auto" }}>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={thrompon}
+                  sx={{ width: 100, height: 100 }}
+                />
+              </Card.Header>
               <Card.Body>
-                <Card.Title>Dark Card Title</Card.Title>
+                <Card.Title>Ugyen Dorji</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                    <br />
+                  <Typography variant="body2" component="p">
+                    Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
+                    2022.
+                    He is Alumni who pursued BE Civil Engineering
+                  </Typography>
                 </Card.Text>
               </Card.Body>
             </Card>
           </Grid2>
-          <Grid2 item xs={4} sx={{display:"flex",justifyContent:"center"}}>
+          <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
             <Card border="dark" style={{ width: "18rem" }}>
-              <Card.Header>Header</Card.Header>
+              <Card.Header style={{ margin: "0 auto" }}>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={thrompon}
+                  sx={{ width: 100, height: 100 }}
+                />
+              </Card.Header>
               <Card.Body>
-                <Card.Title>Dark Card Title</Card.Title>
+                <Card.Title>Ugyen Dorji</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                    <br />
+                  <Typography variant="body2" component="p">
+                    Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
+                    2022.
+                    He is Alumni who pursued BE Civil Engineering
+                  </Typography>
                 </Card.Text>
               </Card.Body>
             </Card>
           </Grid2>
-          <Grid2 item xs={4} sx={{display:"flex",justifyContent:"center"}}>
+          <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
             <Card border="dark" style={{ width: "18rem" }}>
-              <Card.Header>Header</Card.Header>
+              <Card.Header style={{ margin: "0 auto" }}>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={thrompon}
+                  sx={{ width: 100, height: 100 }}
+                />
+              </Card.Header>
               <Card.Body>
-                <Card.Title>Dark Card Title</Card.Title>
+                <Card.Title>Ugyen Dorji</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                    <br />
+                  <Typography variant="body2" component="p">
+                    Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
+                    2022.
+                    He is Alumni who pursued BE Civil Engineering
+                  </Typography>
                 </Card.Text>
               </Card.Body>
             </Card>
           </Grid2>
+          <div className="navButton">
+                <Button variant="outlined" className="btnAlumni" onClick={()=>navigate("/alumni")}>Get to Know More of Our Alumni</Button>
+          </div>
         </Grid2>
       </Parallax>
       <Parallax speed={-10} translateY={10}>
