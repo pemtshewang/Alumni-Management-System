@@ -14,9 +14,11 @@ import { useSnackbar } from 'notistack';
 export default function UserLogout(props) {
 
   const { enqueueSnackbar} = useSnackbar();
-  const { setIsLoggedIn } = useContext(UserContext);
+  const { setIsLoggedIn,notifications,setNotifications } = useContext(UserContext);
 
   const navigate = useNavigate();
+
+  // create a function to set the notifications empty and smoothly reload the page 
 
   return (
     <div>
@@ -39,8 +41,9 @@ export default function UserLogout(props) {
             logout();
             setIsLoggedIn(false);
             props.handleClose();
-            navigate("/");
+            setNotifications([])
             enqueueSnackbar("Successfully Logged Out",{variant:"success",anchorOrigin:{vertical:"top",horizontal:"center"}});
+            navigate("/");
             }}>Logout</Button>
           <Button onClick={props.handleClose} autoFocus>
             Cancel

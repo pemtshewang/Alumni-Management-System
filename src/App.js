@@ -15,11 +15,12 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [serverError,setServerError] = useState(false);
+  const [notifications, setNotifications] = useState([]);
 
   const providerValue = useMemo(() => ({ isLoggedIn, setIsLoggedIn }),[isLoggedIn, setIsLoggedIn ]);
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn , user, setUser , serverError, setServerError}}>
+    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn , user, setUser , serverError, setServerError, notifications, setNotifications}}>
       <Router>
         <div className="App">
           <NavBar />

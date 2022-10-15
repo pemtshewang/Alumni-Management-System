@@ -45,6 +45,6 @@ class AlumniManager(BaseUserManager):
             raise ValueError(('Superuser must have is_staff=True.'))
         if extrafields.get('is_superuser') is not True:
             raise ValueError(('Superuser must have is_superuser=False.'))
-        user = self.create_user(email, password, **extrafields)
+        user = self.create_user(email, password, graduation_year="1970-01-01" ,**extrafields)
         user.save(using=self._db)
         return user

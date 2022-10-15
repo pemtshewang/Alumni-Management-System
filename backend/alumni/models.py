@@ -21,7 +21,7 @@ class Alumni(AbstractBaseUser,PermissionsMixin):
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name","cid_Number",]
+    REQUIRED_FIELDS = ["first_name","cid_Number"]
 
     objects = AlumniManager()
 

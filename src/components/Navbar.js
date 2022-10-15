@@ -137,9 +137,8 @@ function NavBar() {
               </Nav.Link>
               &nbsp;&nbsp;
               <BasicMenu />
-              <Nav.Link as={NavLink} to="/notifications">
+              <Nav.Link as={NavLink} to="#">
                 <NotificationBadge />
-                &nbsp;&nbsp;Notifications
               </Nav.Link>
               {isLoggedIn ? (
                 <ProfileAvatarMenu />
