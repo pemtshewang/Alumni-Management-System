@@ -1,4 +1,5 @@
 from datetime import datetime
+from requests import delete
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from .serializers import EventListSerializer
@@ -43,6 +44,7 @@ class EventCreateView(APIView):
             # push the data in notification table
             # get all the alumni and push the data in notification table
             alumni = Alumni.objects.all()
+            # Dont send the notification to the ones that are alumni as they already  know
             for al in alumni:
                 if al != "admin":
                     Notification.objects.create(
@@ -57,6 +59,12 @@ class EventCreateView(APIView):
         else:
             print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # delete the events using pk
+    def delete(self, request, pk, format=None):
+        event = Event.objects.get(pk=pk)
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class TotalEventHosterView(APIView):
     def get(self, request, format=None):

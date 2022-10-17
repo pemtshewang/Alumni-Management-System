@@ -61,7 +61,7 @@ class AlumniRegisterView(APIView):
         else:
             print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
     # update alumni profile
     def patch(self, request, pk=None):
         alumni = Alumni.objects.get(pk=pk)
