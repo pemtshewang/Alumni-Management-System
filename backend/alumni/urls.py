@@ -8,6 +8,7 @@ router.register(r"all-members",AlumniListRetrieveViewSet,basename="all-members")
 urlpatterns = [
     path('',SearchAlumniView.as_view(),name="search-alumni"),
     path('register/',AlumniRegisterView.as_view(),name="register-alumni"),
+    path('register/update/<int:pk>/',AlumniRegisterView.as_view(),name="update-alumni"),
 ]
 
 urlpatterns += router.urls

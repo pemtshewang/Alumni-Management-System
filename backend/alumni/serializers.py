@@ -5,7 +5,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 class AlumniListSerializer(ModelSerializer):
     class Meta:
         model = Alumni
-        fields = ["first_name","last_name","email","graduation_year","company","job_profile","profile_image"]
+        fields = ["first_name","last_name","cid_Number","email","graduation_year","company","job_profile","profile_image"]
         read_only_fields = [*fields]
 
 class AlumniProfileDetailEditSerializer(ModelSerializer):
@@ -38,4 +38,16 @@ class AlumniCreateSerializer(ModelSerializer):
         fields = ["first_name","last_name","cid_Number","email","password","graduation_year","company","job_profile","profile_image"]
     def create(self, validated_data):
         return  Alumni.objects.create_user(**validated_data)
+########################################################
+
+####################For Update serializers####################
+class AlumniUpdateSerializer(ModelSerializer):
+    class Meta:
+        model = Alumni
+        fields = ["first_name","last_name","cid_Number","graduation_year","company","job_profile","profile_image"]
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
 ########################################################

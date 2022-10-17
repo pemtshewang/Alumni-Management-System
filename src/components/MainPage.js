@@ -2,7 +2,6 @@ import JumbotronDisplay from "./home/Jumbotron";
 import { Parallax } from "react-scroll-parallax";
 import { ParallaxProvider } from "react-scroll-parallax";
 import Grid from "@mui/material/Unstable_Grid2";
-import Paper from "@mui/material/Paper";
 import * as React from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -13,6 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import thrompon from "../assests/thrompon.jpg";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 
 const Clock = (props) => {
   const [date, setDate] = React.useState(new Date());
@@ -84,6 +84,9 @@ function MainPage() {
           <JumbotronDisplay />
         </div>
       </Parallax>
+      <div class="arrow bounce" id="down">
+        <a href="#down"><KeyboardDoubleArrowDownIcon  sx={{fontSize:"90px"}}/></a>
+      </div>
       <div>
         <Parallax
           speed={10}
@@ -160,11 +163,10 @@ function MainPage() {
               <Card.Body>
                 <Card.Title>Ugyen Dorji</Card.Title>
                 <Card.Text>
-                    <br />
-                  <Typography variant="body2" component="p">
+                  <br />
+                  <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
                     Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
-                    2022.
-                    He is Alumni who pursued BE Civil Engineering
+                    2022. He is Alumni who pursued BE Civil Engineering
                   </Typography>
                 </Card.Text>
               </Card.Body>
@@ -182,11 +184,10 @@ function MainPage() {
               <Card.Body>
                 <Card.Title>Ugyen Dorji</Card.Title>
                 <Card.Text>
-                    <br />
-                  <Typography variant="body2" component="p">
+                  <br />
+                  <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
                     Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
-                    2022.
-                    He is Alumni who pursued BE Civil Engineering
+                    2022. He is Alumni who pursued BE Civil Engineering
                   </Typography>
                 </Card.Text>
               </Card.Body>
@@ -204,18 +205,23 @@ function MainPage() {
               <Card.Body>
                 <Card.Title>Ugyen Dorji</Card.Title>
                 <Card.Text>
-                    <br />
-                  <Typography variant="body2" component="p">
+                  <br />
+                  <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
                     Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
-                    2022.
-                    He is Alumni who pursued BE Civil Engineering
+                    2022. He is Alumni who pursued BE Civil Engineering
                   </Typography>
                 </Card.Text>
               </Card.Body>
             </Card>
           </Grid2>
           <div className="navButton">
-                <Button variant="outlined" className="btnAlumni" onClick={()=>navigate("/alumni")}>Get to Know More of Our Alumni</Button>
+            <Button
+              variant="outlined"
+              className="btnAlumni"
+              onClick={() => navigate("/alumni")}
+            >
+              Get to Know More of Our Alumni
+            </Button>
           </div>
         </Grid2>
       </Parallax>

@@ -22,6 +22,8 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import HistoryIcon from '@mui/icons-material/History';
 
 // import NotificationsGetter from './NotificationsGetter';
 
@@ -38,37 +40,136 @@ async function getNotifications() {
 }
 
 function AlignItemsList(props) {
-  const {isLoggedIn} = useContext(UserContext);
-  return (
-    isLoggedIn ? (
+  const { setCount } = React.useContext(UserContext);
+  // For segregrating the read and unread notifications
+  const unread = props.data.filter((item) => item.is_read === false);
+  const readNotifications = props.data.filter((item) => item.is_read === true);
+  
+  //For marking the notification as read
+  async function checkAsRead(data) {
+        //update the notificaiton as read using put method
+    let formData = new FormData();
+    formData.append("id", data);
+    await axios.put(`http://localhost:8000/api/events/notifications/${data}/`)
+    .then((res) => {;
+    setCount((prev) => prev - 1);
+    document.querySelector(`#btn${data}`).style.display = "none";
+    })
+  }
+
+  const { isLoggedIn } = useContext(UserContext);
+  return isLoggedIn ? (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-      {props.data.map((value) => { return(
-        <ListItem alignItems="flex-start" width="100%">
-          <ListItemAvatar>
-            <Avatar alt={value.author} src={"http://localhost:8000"+value.image}/>
-          </ListItemAvatar>
-          <ListItemText
-            primary={new Date(value.created_at).toLocaleString()}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  sx={{ display: "inline" }}
-                  component="span"
-                  variant="body2"
-                  color="text.primary"
+      {/* for unread notificaiton */}
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+            <VisibilityOffIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="Unread Notifications" secondary={unread.length > 0 ?
+         unread.length + " notifications unread":"No notifications unread"} />
+         <br />
+      </ListItem>
+        {unread.length > 0 ? (
+          unread.map((value) => {
+            return (
+              <ListItem alignItems="flex-start" width="100%">
+                <ListItemAvatar>
+                  <Avatar
+                    alt={value.author}
+                    src={"http://localhost:8000" + value.image}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={new Date(value.created_at).toLocaleString()}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {"Author :" + value.author}
+                      </Typography>
+                      <br />
+                      {value.description}
+                    </React.Fragment>
+                  }
+                />
+                <Divider variant="inset" component="li" />
+                <Button
+                  id={value.id}
+                  type="submit"
+                  onClick={() => checkAsRead(value.id)}
+                  variant="outlined"
                 >
-                  {"Author :"+value.author}
-                </Typography>
-                <br />
-                {value.description}
-              </React.Fragment>
-            }
-          />
-          <Divider variant="inset" component="li" />
-          <Button variant="outlined">Mark as Read</Button>
-        </ListItem>)
-      })}
-    </List>): <Typography variant="h6" component="div">You are not logged in</Typography>
+                  Mark as Read
+                </Button>
+              </ListItem>
+            );
+          })
+        ) : (
+          <Typography variant="body2" component="body2" gutterBottom>
+            No Unread Notifications
+          </Typography>
+        )}
+      </Box>
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+          <ListItem>
+        <ListItemAvatar>
+          <Avatar>
+            <HistoryIcon/>
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="Old Notifications" secondary={readNotifications.length +" notifications"}/>
+         <br />
+      </ListItem>
+        {readNotifications.length > 0 ? (
+          readNotifications.map((value) => {
+            return (
+              <ListItem alignItems="flex-start" width="100%">
+                <ListItemAvatar>
+                  <Avatar
+                    alt={value.author}
+                    src={"http://localhost:8000" + value.image}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={new Date(value.created_at).toLocaleString()}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        sx={{ display: "inline" }}
+                        component="span"
+                        variant="body2"
+                        color="text.primary"
+                      >
+                        {"Author :" + value.author}
+                      </Typography>
+                      <br />
+                      {value.description}
+                    </React.Fragment>
+                  }
+                />
+                <Divider variant="inset" component="li" />
+              </ListItem>
+            );
+          })
+        ) : (
+          <Typography variant="body2" component="body2" gutterBottom>
+            No Notifications
+          </Typography>
+        )}
+      </Box>
+    </List>
+  ) : (
+    // if not logged in
+    <Typography variant="h6" component="div">
+      You are not logged in
+    </Typography>
   );
 }
 
@@ -127,6 +228,7 @@ export default function NotificationBadge() {
       getNotifications().then((data) => setNotifications(data));
     }
   }, [isLoggedIn, setNotifications]);
+
   function notificationsLabel(count) {
     if (count === 0) {
       return "no notifications";
@@ -136,6 +238,7 @@ export default function NotificationBadge() {
     }
     return `${count} notifications`;
   }
+
   const styles = {
     fontSize: "var(--bs-nav-link-font-size)",
     fontWeight: "var(--bs-nav-link-font-weight)",
@@ -144,7 +247,19 @@ export default function NotificationBadge() {
     transition:
       "color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out",
   };
-
+  function getNotificationsCount() {
+    let count = 0;
+    notifications.forEach((notification) => {
+      if (notification.is_read === false) {
+        count++;
+      }
+    });
+    return count;
+  }
+  const { count, setCount } = React.useContext(UserContext);
+  if (isLoggedIn) {
+    setCount(getNotificationsCount());
+  }
   return (
     <>
       <IconButton
@@ -152,7 +267,7 @@ export default function NotificationBadge() {
         size="small"
         onClick={handleClickOpen}
       >
-        <Badge badgeContent={notifications.length} color="secondary">
+        <Badge badgeContent={count} color="secondary">
           <FontAwesomeIcon icon={faBell} color="black" />
         </Badge>
       </IconButton>

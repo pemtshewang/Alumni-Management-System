@@ -79,3 +79,11 @@ class NotificationView(APIView):
         notification.is_read = True
         notification.save()
         return Response(status=status.HTTP_200_OK)
+
+class NotificationReadUpdateView(APIView):
+    # Update the notification status
+    def put(self, request, format=None, pk=None):
+        notification = Notification.objects.get(pk=pk)
+        notification.is_read = True
+        notification.save()
+        return Response(status=status.HTTP_200_OK)

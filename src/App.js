@@ -10,17 +10,19 @@ import SignUp from "./components/credentials/SignUp";
 import EventCreate from "./components/Events/forms/CreateEvent";
 import { UserContext } from "./context/UserContext";
 import { useMemo, useState } from "react";
+import UpdateProfile from "./components/credentials/UpdateProfile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [serverError,setServerError] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [count, setCount] = useState(0);
 
   const providerValue = useMemo(() => ({ isLoggedIn, setIsLoggedIn }),[isLoggedIn, setIsLoggedIn ]);
 
   return (
-    <UserContext.Provider value={{ isLoggedIn, setIsLoggedIn , user, setUser , serverError, setServerError, notifications, setNotifications}}>
+    <UserContext.Provider value={{ count, setCount ,isLoggedIn, setIsLoggedIn , user, setUser , serverError, setServerError, notifications, setNotifications}}>
       <Router>
         <div className="App">
           <NavBar />

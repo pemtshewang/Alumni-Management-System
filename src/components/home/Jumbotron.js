@@ -2,16 +2,12 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import campus from "../../assests/campus.jpg";
 import jica from "../../assests/jica.png";
+import zumtruel from "../../assests/zumtruelwinner.jpg";
 import students from "../../assests/students.png";
 import "bootstrap/dist/css/bootstrap.css"
 import Carousel from 'react-bootstrap/Carousel';
-import {BrowserRouter as Router,
-        Switch,
-        Link
-      } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Button as MuiButton } from '@mui/material';
-import Typography from "@mui/material/Typography";
 
 function JumbotronDisplay(){
   return(
@@ -55,7 +51,7 @@ function JumbotronDisplay(){
       <Carousel.Item>
         <img
           className="d-block w-100"
-          src={students}
+          src={zumtruel}
           alt="Third slide"
         />
         <Carousel.Caption>

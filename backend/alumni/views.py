@@ -3,7 +3,7 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 from .serializers import AlumniListSerializer
 from .models import Alumni
-from .serializers import MyTokenObtainPairSerializer, AlumniCreateSerializer
+from .serializers import MyTokenObtainPairSerializer, AlumniCreateSerializer, AlumniUpdateSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework import filters
@@ -30,7 +30,8 @@ class AlumniListRetrieveViewSet(ModelViewSet):
         user = get_object_or_404(queryset, pk=pk)
         serializer = AlumniListSerializer(user)
         return Response(serializer.data)
-
+    
+    # for updating alumni profile
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -60,3 +61,20 @@ class AlumniRegisterView(APIView):
         else:
             print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    # update alumni profile
+    def patch(self, request, pk=None):
+        alumni = Alumni.objects.get(pk=pk)
+        serializer = AlumniUpdateSerializer(alumni, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+   # delete alumni profile
+    def delete(self, request, pk=None):
+        alumni = Alumni.objects.get(pk=pk)
+        alumni.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

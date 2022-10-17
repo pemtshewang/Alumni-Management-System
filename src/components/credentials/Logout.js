@@ -14,7 +14,7 @@ import { useSnackbar } from 'notistack';
 export default function UserLogout(props) {
 
   const { enqueueSnackbar} = useSnackbar();
-  const { setIsLoggedIn,notifications,setNotifications } = useContext(UserContext);
+  const { setIsLoggedIn,notifications,setNotifications,setCount } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -41,7 +41,8 @@ export default function UserLogout(props) {
             logout();
             setIsLoggedIn(false);
             props.handleClose();
-            setNotifications([])
+            setNotifications([]);
+            setCount(0);
             enqueueSnackbar("Successfully Logged Out",{variant:"success",anchorOrigin:{vertical:"top",horizontal:"center"}});
             navigate("/");
             }}>Logout</Button>

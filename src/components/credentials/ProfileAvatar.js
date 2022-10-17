@@ -10,11 +10,89 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import UserLogout from './Logout';
+import PersonalDialogBox from '../Profiles/PersonalDialogBox';
 import { getCurrentUser } from '../../api/authServices';
-import { UserContext } from '../../context/UserContext';
+import axiosInstance from '../../api/axios';
+import { useEffect } from 'react';
+import UpdateProfile from './UpdateProfile';
+import Dialog from '@mui/material/Dialog';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import CloseIcon from '@mui/icons-material/Close';
+import Slide from '@mui/material/Slide';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+function EditProfileDialog(props) {
+  return (
+    <div>
+      <Dialog
+        fullScreen
+        open={props.open}
+        onClose={props.close}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={{ position: "relative" }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={props.close}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              Update Profile
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <UpdateProfile data={props.data} />
+      </Dialog>
+    </div>
+  );
+}
+
+
+//get the current user detail if logged in
+
 export default function ProfileAvatarMenu() {
   const data = getCurrentUser();
+  const [userData, setUserData] = React.useState("");
   const [openLogout, setOpenLogout] = React.useState(false);
+  const [diOpen,handleOpen] = React.useState(false);
+  const [editProfileDialog,setEditProfileDialog] = React.useState(false);
+
+  function editProfile(){
+    setEditProfileDialog(true);
+  }
+  function closeEditProfile(){
+    setEditProfileDialog(false);
+  }
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      await axiosInstance.get(`alumni/all-members/${getCurrentUser().id}/`)
+      .then((response)=>{;
+      response.data.profile_image = "http://localhost:8000"+response.data.profile_image;
+      setUserData(response.data);
+      })
+      .catch((error)=>{
+        alert(error);
+      })
+    }
+    fetchUser();
+  },[handleOpen]);
+  
+  function showProfile(){
+    handleOpen(true);
+  }
+
+  function handleBtnClose(){
+    handleOpen(false);
+  }
 
   function handleLogoutOpen(){
     setOpenLogout(true);
@@ -24,12 +102,12 @@ export default function ProfileAvatarMenu() {
     setOpenLogout(false);
   }
 
-  console.log(data.profile_image,data.first_name);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -84,18 +162,15 @@ export default function ProfileAvatarMenu() {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem onClick={showProfile}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
-        </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={editProfile}>
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          Edit My Account
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
@@ -104,7 +179,11 @@ export default function ProfileAvatarMenu() {
           <a className="profile-avatar__text" onClick={handleLogoutOpen} href="#">Logout</a>
         </MenuItem>
       </Menu>
+
       {openLogout && <UserLogout open={openLogout} handleClose={handleLogoutClose}/>}
+      {diOpen && <PersonalDialogBox open={diOpen} handleClose={handleBtnClose} data={userData}/>}
+      {editProfileDialog && <EditProfileDialog open={editProfileDialog} data={userData} close={closeEditProfile}/>}
+
     </React.Fragment>
   );
 }
