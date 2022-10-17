@@ -45,6 +45,10 @@ function AlignItemsList(props) {
   const unread = props.data.filter((item) => item.is_read === false);
   const readNotifications = props.data.filter((item) => item.is_read === true);
   
+  function decrementCount() {
+    alert("decrementing count");
+    setCount((prev) => prev - 1);
+  }
   //For marking the notification as read
   async function checkAsRead(data) {
         //update the notificaiton as read using put method
@@ -52,12 +56,13 @@ function AlignItemsList(props) {
     formData.append("id", data);
     await axios.put(`http://localhost:8000/api/events/notifications/${data}/`)
     .then((res) => {;
-    setCount((prev) => prev - 1);
-    document.querySelector(`#btn${data}`).style.display = "none";
+      // decrement the count of unread notifications
+      decrementCount();
     })
   }
 
   const { isLoggedIn } = useContext(UserContext);
+  // if logged in only, show the notifications
   return isLoggedIn ? (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
       {/* for unread notificaiton */}

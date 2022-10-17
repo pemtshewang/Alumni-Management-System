@@ -13,6 +13,8 @@ import thrompon from "../assests/thrompon.jpg";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import venkatsan from "../assests/venkatesan.jpg";
+import dasho from "../assests/dasho.jpg";
 
 const Clock = (props) => {
   const [date, setDate] = React.useState(new Date());
@@ -99,7 +101,7 @@ function MainPage() {
             container
             rowSpacing={1}
             coloumns={10}
-            sx={{ display: "flex", justifyContent: "center" }}
+            sx={{ display: "flex", justifyContent: "center", mb: 5 }}
           >
             <Grid xs={4}>
               <paper elevation={3}>
@@ -148,7 +150,7 @@ function MainPage() {
           component="h2"
           color="black"
         >
-          Popular Cstian Alumni
+          What They Say About CST and its Students
         </Typography>
         <Grid2 container coloumns={12} sx={{ margin: "0 auto" }}>
           <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
@@ -165,8 +167,7 @@ function MainPage() {
                 <Card.Text>
                   <br />
                   <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
-                    Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
-                    2022. He is Alumni who pursued BE Civil Engineering
+                   <i> For four years, CST has been a home to me. It had helped me in every way possible to become the person I am today. I am grateful to have been a part of this institution and I am proud to be a CSTian.</i>
                   </Typography>
                 </Card.Text>
               </Card.Body>
@@ -177,17 +178,16 @@ function MainPage() {
               <Card.Header style={{ margin: "0 auto" }}>
                 <Avatar
                   alt="Remy Sharp"
-                  src={thrompon}
+                  src={venkatsan}
                   sx={{ width: 100, height: 100 }}
                 />
               </Card.Header>
               <Card.Body>
-                <Card.Title>Ugyen Dorji</Card.Title>
+                <Card.Title>S. Venkatsan</Card.Title>
                 <Card.Text>
                   <br />
                   <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
-                    Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
-                    2022. He is Alumni who pursued BE Civil Engineering
+                    <i>"We have always appreciated the talents and the sheer potential of our CSTians and I am still appreciating</i>
                   </Typography>
                 </Card.Text>
               </Card.Body>
@@ -198,17 +198,16 @@ function MainPage() {
               <Card.Header style={{ margin: "0 auto" }}>
                 <Avatar
                   alt="Remy Sharp"
-                  src={thrompon}
+                  src={dasho}
                   sx={{ width: 100, height: 100 }}
                 />
               </Card.Header>
               <Card.Body>
-                <Card.Title>Ugyen Dorji</Card.Title>
+                <Card.Title>Dasho Nidup Dorji</Card.Title>
                 <Card.Text>
                   <br />
-                  <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
-                    Thrompon Ugyen Dorji is a new elected Thimphu Thrompon for
-                    2022. He is Alumni who pursued BE Civil Engineering
+                  <Typography variant="body2" component="b" sx={{fontFamily:"Consolas"}}>
+                    <i>CST has had always renowned for its quality education and the students are always well prepared for the challenges of the future. I am confident that the students of CST will continue to excel in their respective fields.</i>
                   </Typography>
                 </Card.Text>
               </Card.Body>
@@ -226,7 +225,7 @@ function MainPage() {
         </Grid2>
       </Parallax>
       <Parallax speed={-10} translateY={10}>
-        <Grid2>
+        <Grid2 sx={{mb:5}}>
           <Grid2
             item
             xs={12}
@@ -272,9 +271,10 @@ function MainPage() {
                   </Typography>
                 </Card.Text>
                 <Clock />
+                <h6>From Now</h6>
               </Card.Body>
               <Card.Footer className="text-muted">
-                <Button variant="primary">Find More Events</Button>
+                <Button variant="primary" href="/events">Take Your Part</Button>
               </Card.Footer>
             </Card>
           </Grid2>

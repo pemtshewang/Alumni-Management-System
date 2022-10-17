@@ -20,14 +20,14 @@
 }
 
 .carousel {
-  margin-top: 17px;
+  margin-top: 3px;
   box-shadow: 3px 4px 5px black;
   height: 80vh;
 }
 
 .carousel img {
   filter: brightness(50%);
-  height: 80vh;
+  height: 81vh;
 }
 .carousel-inner {
   align-items: center;

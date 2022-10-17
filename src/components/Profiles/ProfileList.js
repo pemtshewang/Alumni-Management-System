@@ -57,7 +57,8 @@ export default function ProfileList() {
         columns={12}
         spacing={5}
         width="inherit"
-        marginTop={10}
+        marginTop={5}
+        marginBottom={10}
       >
         {appState ? (
           usersList.map((data) => {

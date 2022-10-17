@@ -1,5 +1,6 @@
 from django.db import models
 from alumni.models import Alumni
+from django.utils import timezone
 
 ##################These classes are Databases Tables for storing information ######################
 class Event(models.Model):
@@ -29,7 +30,7 @@ class Notification(models.Model):
        The notifications are automatically deleted when an event is deleted
        The notifications are mapped to the User by the Foreign key relationship"""
     author = models.ForeignKey(Alumni,on_delete=models.CASCADE)
-    created_at = models.DateTimeField()
+    created_at = models.DateTimeField(default=timezone.now)
     title = models.CharField(max_length=100,null=False)
     description = models.TextField(max_length=500, null=False)
     image = models.ImageField(upload_to="notifications/",default="notifications/default.png",max_length=500)
