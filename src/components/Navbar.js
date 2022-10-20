@@ -46,7 +46,7 @@ function BasicMenu() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <FontAwesomeIcon icon={faCalendarCheck} color="black" />
+        <FontAwesomeIcon icon={faCalendarCheck} color="white" />
         &nbsp;&nbsp;Events
       </Nav.Link>
       <Menu
@@ -119,7 +119,7 @@ function NavBar() {
   return (
     <React.Fragment>
       {open && <SearchResultsBox results={results} open={open} handleClose={handleClose}/>}
-      <Navbar bg="light" expand="lg" variant="light" sticky="top">
+      <Navbar bg="dark" expand="lg" variant="dark" sticky="top">
         <Container fluid>
           <Navbar.Brand as={NavLink} to="/">
             <img className="imgLogo" src={logo} alt="LogoImage" />
@@ -132,7 +132,7 @@ function NavBar() {
               navbarScroll
             >
               <Nav.Link as={NavLink} to="/alumni">
-                <FontAwesomeIcon icon={faAddressCard} color="black" />
+                <FontAwesomeIcon icon={faAddressCard} color="white" />
                 &nbsp;&nbsp;Alumni
               </Nav.Link>
               &nbsp;&nbsp;
@@ -144,7 +144,7 @@ function NavBar() {
                 <ProfileAvatarMenu />
               ) : (
                 <Nav.Link as={NavLink} to="/login">
-                  <FontAwesomeIcon icon={faRightToBracket} color="black" />
+                  <FontAwesomeIcon icon={faRightToBracket} color="white" />
                   &nbsp;&nbsp;Login
                 </Nav.Link>
               )}

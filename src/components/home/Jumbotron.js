@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import campus from "../../assests/campus.jpg";
 import jica from "../../assests/jica.png";
 import zumtruel from "../../assests/zumtruelwinner.jpg";
-import students from "../../assests/students.png";
 import "bootstrap/dist/css/bootstrap.css"
 import Carousel from 'react-bootstrap/Carousel';
 import Box from '@mui/material/Box';

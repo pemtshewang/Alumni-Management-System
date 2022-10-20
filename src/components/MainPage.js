@@ -1,6 +1,4 @@
 import JumbotronDisplay from "./home/Jumbotron";
-import { Parallax } from "react-scroll-parallax";
-import { ParallaxProvider } from "react-scroll-parallax";
 import Grid from "@mui/material/Unstable_Grid2";
 import * as React from "react";
 import ImageList from "@mui/material/ImageList";
@@ -15,12 +13,13 @@ import { useNavigate } from "react-router-dom";
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import venkatsan from "../assests/venkatesan.jpg";
 import dasho from "../assests/dasho.jpg";
+import Box from "@mui/material/Box";
 
 const Clock = (props) => {
   const [date, setDate] = React.useState(new Date());
 
-  //Replaces componentDidMount and componentWillUnmount
   React.useEffect(() => {
+    //Setting up a timer that counts for the duration of the event
     var timerID = setInterval(() => tick(), 1000);
     return function cleanup() {
       clearInterval(timerID);
@@ -32,7 +31,7 @@ const Clock = (props) => {
   }
 
   return (
-    <Typography variant="h4" component="h2" color="black">
+    <Typography variant="h4" component="h2" color="white">
       {date.getHours()}:{date.getMinutes()}:{date.getSeconds()}
     </Typography>
   );
@@ -80,37 +79,35 @@ const itemData = [
 function MainPage() {
   const navigate = useNavigate();
   return (
-    <ParallaxProvider>
-      <Parallax speed={-5}>
+      <>
         <div>
           <JumbotronDisplay />
         </div>
-      </Parallax>
       <div class="arrow bounce" id="down">
         <a href="#down"><KeyboardDoubleArrowDownIcon  sx={{fontSize:"90px"}}/></a>
       </div>
-      <div>
-        <Parallax
-          speed={10}
-          style={{
-            paddingTop: "50px",
-          }}
-        >
+      <div class="intro-page">
           <Grid
             className="slow"
             container
             rowSpacing={1}
             coloumns={10}
-            sx={{ display: "flex", justifyContent: "center", mb: 5 }}
+            sx={{ display: "flex", justifyContent: "center", 
+            background:"linear-gradient(to right, #000, #000)"
+            }}
+            padding={9}
+            paddingTop={12}
+
           >
             <Grid xs={4}>
               <paper elevation={3}>
                 <Typography
                   variant="h5"
                   style={{
-                    fontFamily: "Consolas, sans-serif",
+                    fontFamily: "helvitica, sans-serif",
                     fontSize: "1.75rem !important",
                     lineHeight: "50px",
+                    color:"white"
                   }}
                   component="h2"
                   color="black"
@@ -140,21 +137,27 @@ function MainPage() {
               </ImageList>
             </Grid>
           </Grid>
-        </Parallax>
       </div>
-      <Parallax speed={-10} translateY={[-8, -14]}>
+      <Box 
+      sx={{
+            background:"linear-gradient(to left, #fff, #fff)"
+      }}>
         <Typography
-          sx={{ textAlign: "center", fontFamily: "consolas" }}
-          marginBottom="35px"
+          sx={{ textAlign: "left", 
+          fontFamily: "Helvitica",
+          }}
+          marginBottom="50px"
+          paddingLeft={10}
+          paddingTop={5}
           variant="h4"
           component="h2"
           color="black"
         >
-          What They Say About CST and its Students
+          Thoughts from our renown individuals
         </Typography>
         <Grid2 container coloumns={12} sx={{ margin: "0 auto" }}>
-          <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
-            <Card border="dark" style={{ width: "18rem" }}>
+          <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center",color:"black"}}>
+            <Card style={{ width: "20rem" , background:"inherit", border:"4px solid black"}}>
               <Card.Header style={{ margin: "0 auto" }}>
                 <Avatar
                   alt="Remy Sharp"
@@ -163,10 +166,10 @@ function MainPage() {
                 />
               </Card.Header>
               <Card.Body>
-                <Card.Title>Ugyen Dorji</Card.Title>
+                <Card.Title style={{textAlign:"center", fontFamily:"helvitica", fontSize:25}}>Ugyen Dorji</Card.Title>
                 <Card.Text>
                   <br />
-                  <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
+                  <Typography variant="body2" component="p" sx={{fontFamily:"helvitica",fontSize:20}}>
                    <i> For four years, CST has been a home to me. It had helped me in every way possible to become the person I am today. I am grateful to have been a part of this institution and I am proud to be a CSTian.</i>
                   </Typography>
                 </Card.Text>
@@ -174,7 +177,7 @@ function MainPage() {
             </Card>
           </Grid2>
           <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
-            <Card border="dark" style={{ width: "18rem" }}>
+            <Card style={{ width: "20rem", background:"inherit",color:"black", border:"4px solid black"}}>
               <Card.Header style={{ margin: "0 auto" }}>
                 <Avatar
                   alt="Remy Sharp"
@@ -183,18 +186,18 @@ function MainPage() {
                 />
               </Card.Header>
               <Card.Body>
-                <Card.Title>S. Venkatsan</Card.Title>
+                <Card.Title style={{textAlign:"center", fontFamily:"helvitica", fontSize:25}}>S. Venkatsan</Card.Title>
                 <Card.Text>
                   <br />
-                  <Typography variant="body2" component="p" sx={{fontFamily:"Consolas"}}>
-                    <i>"We have always appreciated the talents and the sheer potential of our CSTians and I am still appreciating</i>
+                  <Typography variant="body2" component="p" sx={{fontFamily:"helvitica",fontSize:20}}>
+                    <i>We have always appreciated the talents and the sheer potential of our CSTians and I am still appreciating</i>
                   </Typography>
                 </Card.Text>
               </Card.Body>
             </Card>
           </Grid2>
           <Grid2 item xs={4} sx={{ display: "flex", justifyContent: "center" }}>
-            <Card border="dark" style={{ width: "18rem" }}>
+            <Card style={{ color:"black", width: "20rem", background:"inherit", border:"4px solid black" }}>
               <Card.Header style={{ margin: "0 auto" }}>
                 <Avatar
                   alt="Remy Sharp"
@@ -203,11 +206,11 @@ function MainPage() {
                 />
               </Card.Header>
               <Card.Body>
-                <Card.Title>Dasho Nidup Dorji</Card.Title>
+                <Card.Title style={{textAlign:"center", fontFamily:"helvitica", fontSize:25}}>Dasho Nidup Dorji</Card.Title>
                 <Card.Text>
                   <br />
-                  <Typography variant="body2" component="b" sx={{fontFamily:"Consolas"}}>
-                    <i>CST has had always renowned for its quality education and the students are always well prepared for the challenges of the future. I am confident that the students of CST will continue to excel in their respective fields.</i>
+                  <Typography variant="body2" component="p" sx={{fontFamily:"helvitica",fontSize:20}}>
+                   <i> CST has had always renowned for its quality education and the students are always well prepared for the challenges of the future. I am confident that the students of CST will continue to excel in their respective fields.</i>
                   </Typography>
                 </Card.Text>
               </Card.Body>
@@ -215,7 +218,7 @@ function MainPage() {
           </Grid2>
           <div className="navButton">
             <Button
-              variant="outlined"
+              variant="contained"
               className="btnAlumni"
               onClick={() => navigate("/alumni")}
             >
@@ -223,28 +226,30 @@ function MainPage() {
             </Button>
           </div>
         </Grid2>
-      </Parallax>
-      <Parallax speed={-10} translateY={10}>
-        <Grid2 sx={{mb:5}}>
+      </Box>
+        <Grid2 >
           <Grid2
             item
             xs={12}
             justifyContent="center"
-            sx={{ display: "flex", padding: "30px" }}
+            sx={{ display: "flex", padding: "30px",
+            background: "linear-gradient(#000, #000)" }}
           >
             <Card
               className="text-center"
               style={{
                 width: "800px",
-                border: "3px solid black",
+                border: "3px solid white",
+                background: "inherit",
+                color:"white"
               }}
             >
-              <Card.Header>
+              <Card.Header >
                 <Typography
                   variant="h4"
-                  sx={{ fontFamily: "consolas" }}
+                  sx={{ color:"white", fontFamily:"helvitica", }}
                   component="h2"
-                  color="black"
+                  color="white"
                 >
                   Featured Event
                 </Typography>
@@ -253,9 +258,9 @@ function MainPage() {
                 <Card.Title>
                   <Typography
                     variant="h5"
-                    sx={{ fontFamily: "consolas" }}
                     component="h2"
-                    color="black"
+                    color="white"
+                    sx={{ fontFamily:"helvitica", fontSize:25 }}
                   >
                     The Alumni Fest
                   </Typography>
@@ -263,15 +268,15 @@ function MainPage() {
                 <Card.Text>
                   <Typography
                     variant="h6"
-                    sx={{ fontFamily: "consolas" }}
                     component="h6"
-                    color="black"
+                    color="white"
+                    sx={{ fontFamily:"helvitica", fontSize:23 }}
                   >
                     The Annual Fest for Alumni is on the way
                   </Typography>
                 </Card.Text>
                 <Clock />
-                <h6>From Now</h6>
+                <h6 style={{fontFamily:"helvitica"}}>From Now</h6>
               </Card.Body>
               <Card.Footer className="text-muted">
                 <Button variant="primary" href="/events">Take Your Part</Button>
@@ -279,8 +284,7 @@ function MainPage() {
             </Card>
           </Grid2>
         </Grid2>
-      </Parallax>
-    </ParallaxProvider>
+    </>
   );
 }
 export default MainPage;

@@ -45,10 +45,6 @@ function AlignItemsList(props) {
   const unread = props.data.filter((item) => item.is_read === false);
   const readNotifications = props.data.filter((item) => item.is_read === true);
   
-  function decrementCount() {
-    alert("decrementing count");
-    setCount((prev) => prev - 1);
-  }
   //For marking the notification as read
   async function checkAsRead(data) {
         //update the notificaiton as read using put method
@@ -57,8 +53,10 @@ function AlignItemsList(props) {
     await axios.put(`http://localhost:8000/api/events/notifications/${data}/`)
     .then((res) => {;
       // decrement the count of unread notifications
-      decrementCount();
+      // refresh the page withouth reloading
+      setCount((prevCount) => prevCount - 1);
     })
+     window.location.reload(false);
   }
 
   const { isLoggedIn } = useContext(UserContext);
@@ -273,7 +271,7 @@ export default function NotificationBadge() {
         onClick={handleClickOpen}
       >
         <Badge badgeContent={count} color="secondary">
-          <FontAwesomeIcon icon={faBell} color="black" />
+          <FontAwesomeIcon icon={faBell} color="white" />
         </Badge>
       </IconButton>
       <NavLink onClick={handleClickOpen} style={styles}>

@@ -15,6 +15,11 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Typography } from "@mui/material";
+import AlertTitle from "@mui/material/AlertTitle";
+import Alert from "@mui/material/Alert";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import Event from '@mui/icons-material/Event';
+
 
 export default function EventSection() {
   // API calls here and setting app loading
@@ -28,7 +33,7 @@ export default function EventSection() {
         .all([
           await axiosInstance.get("events/all-events/"),
           await axiosInstance.get("events/past-events/"),
-          await axiosInstance.get("events/event-hosters/")
+          await axiosInstance.get("events/event-hosters/"),
         ])
         .then(
           axios.spread((res1, res2, res3) => {
@@ -56,7 +61,7 @@ export default function EventSection() {
       {appState ? (
         <>
           <Grid item xs={5}>
-            <SpecialEvent />
+            <SpecialEvent data={newEventsList}/>
           </Grid>
           {/* The total event's counts on in the panel are reflected  */}
           <Grid item xs={3}>
@@ -99,20 +104,57 @@ export default function EventSection() {
             </List>
           </Grid>
           {/* -------------------------------------------------------------- */}
-
+          <Grid item xs={12}>
+            <Typography variant="b" component="h6" sx={{ color: "black", ml: 18 }}>
+              <Event /> Upcoming Events
+            </Typography>
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              width="inherit"
+              columnGap={4}
+              rowGap={4}
+              sx={{ margin: "0 auto" }}
+            >
+              {newEventsList.length > 0 ? (
+                newEventsList.map((data) => {
+                  return <EventCard key={data.id} data={data} />;
+                })
+              ) : (
+                <Grid item xs={12} sx={{ ml: 14 }}>
+                  <Alert
+                    severity="info"
+                    sx={{ maxWidth: 250, border: "1px solid black" }}
+                  >
+                    <AlertTitle>Info</AlertTitle>
+                    No new events available
+                  </Alert>
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
           {/* User Events Render Logics */}
-          <Grid
-            container
-            justifyContent="center"
-            alignItems="center"
-            width="inherit"
-            columnGap={4}
-            rowGap={4}
-            sx={{ margin: "0 auto" }}
-          >
-            {eventsList.map((data) => {
-              return <EventCard key={data.id} data={data} />;
-            })}
+          <hr />
+          <Grid item xs={12}>
+            <Box>
+            <Typography variant="b" component="h6" sx={{ color: "black", ml: 18 }}>
+              <EventAvailableIcon /> Past Events
+            </Typography>
+            </Box>
+            <Grid
+              container
+              justifyContent="center"
+              alignItems="center"
+              width="inherit"
+              columnGap={4}
+              rowGap={4}
+              sx={{ margin: "0 auto" }}
+            >
+              {eventsList.map((data) => {
+                return <EventCard key={data.id} data={data} />;
+              })}
+            </Grid>
           </Grid>
         </>
       ) : (

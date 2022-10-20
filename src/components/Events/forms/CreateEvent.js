@@ -109,6 +109,7 @@ export default function EventCreate() {
           },  
         });
         navigate("/events");
+        window.location.reload();
       })
       .catch((error) => {
         //useContext for server error

@@ -11,27 +11,26 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 
 export default function Footer(){
   return(
-   <MDBFooter className='text-center' color='black' bgColor="white">
-    <hr/>
+   <MDBFooter className='text-center relative' color='light' bgColor="white">
       <MDBContainer className='p-2'>
         <section className='mb-2'> 
-          <MDBBtn outline color="dark" floating className='m-1' href='#!' role='button'>
+          <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
             <MDBIcon fab icon='facebook' />
           </MDBBtn>
 
-          <MDBBtn outline color="dark" floating className='m-1' href='#!' role='button'>
+          <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
             <MDBIcon fab icon='discord' />
           </MDBBtn>
 
-          <MDBBtn outline color="dark" floating className='m-1' href='#!' role='button'>
+          <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
             <MDBIcon fab icon='linkedin-in' />
           </MDBBtn>
 
-          <MDBBtn outline color="dark" floating className='m-1' href='#!' role='button'>
+          <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
             <MDBIcon fab icon='github' />
           </MDBBtn>
 
-          <MDBBtn outline color="dark" floating className='m-1' href='#!' role='button'>
+          <MDBBtn outline color="light" floating className='m-1' href='#!' role='button'>
             <MDBIcon fab icon='telegram' />
           </MDBBtn>
         </section>
@@ -44,13 +43,11 @@ export default function Footer(){
                   <strong>Sign up for our newsletter</strong>
                 </p>
               </MDBCol>
-
               <MDBCol md='4' start='12'>
                 <MDBInput contrast type='email' placeholder="Email Address" className='mb-2' />
               </MDBCol>
-
               <MDBCol size="auto">
-                <MDBBtn outline color='dark' type='submit' className='mb-2'>
+                <MDBBtn outline color='light' type='submit' className='mb-2'>
                   Subscribe
                 </MDBBtn>
               </MDBCol>
@@ -61,20 +58,19 @@ export default function Footer(){
           <MDBRow className="justify-content-center">
             <MDBCol lg='3' md='6' className='mb-4 mb-md-0'>
               <h5 className='text-uppercase'>cst websites</h5>
-
               <ul className='list-unstyled mb-0'>
                 <li>
-                  <a href='https://www.cst.edu.bt'className='text-dark' target="_blank">
+                  <a href='https://www.cst.edu.bt'className='text-light' target="_blank">
                     CST 
                   </a>
                 </li>
                 <li>
-                  <a href='https://vle.cst.edu.bt/' className='text-dark' target="_blank">
+                  <a href='https://vle.cst.edu.bt/' className='text-light' target="_blank">
                     CST VLE
                   </a>
                 </li>
                 <li>
-                  <a href='https://www.rub.edu.bt/' className='text-dark' target="_blank">
+                  <a href='https://www.rub.edu.bt/' className='text-light' target="_blank">
                     RUB CST
                   </a>
                 </li>
@@ -86,17 +82,17 @@ export default function Footer(){
 
               <ul className='list-unstyled mb-0'>
                 <li>
-                  <a href='#!' className='text-dark'>
+                  <a href='#!' className='text-light'>
                     Documentation
                   </a>
                 </li>
                 <li>
-                  <a href='#!' className='text-dark'>
+                  <a href='#!' className='text-light'>
                     Pricing
                   </a>
                 </li>
                 <li>
-                  <a href='#!' className='text-dark'>
+                  <a href='#!' className='text-light'>
                     Terms and Services
                   </a>
                 </li>
@@ -108,17 +104,17 @@ export default function Footer(){
 
               <ul className='list-unstyled mb-0'>
                 <li>
-                  <a href='#!' className='text-dark'>
+                  <a href='#!' className='text-light'>
                     Contact Admin
                   </a>
                 </li>
                 <li>
-                  <a href='#!' className='text-dark'>
+                  <a href='#!' className='text-light'>
                     Counselling services
                   </a>
                 </li>
                 <li>
-                  <a href='#!' className='text-dark'>
+                  <a href='#!' className='text-light'>
                     Tutorials
                   </a>
                 </li>

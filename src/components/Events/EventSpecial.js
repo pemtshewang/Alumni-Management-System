@@ -3,19 +3,24 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { IconButton } from "@mui/material";
 import StarIcon from '@mui/icons-material/Star';
+import Typography from "@mui/material/Typography";
 
 
-
-function SpecialEvent() {
+function SpecialEvent(props) {
   return (
     <Card>
-      <Card.Header>Featured</Card.Header>
+      <Card.Header>
+        <Typography variant="h5" component="div">
+          Featured event
+        </Typography>
+      </Card.Header>
       <Card.Body>
-        <Card.Title>Special title treatment</Card.Title>
+        <Card.Title>{props.data.length>0?
+        props.data[0].title: "No Special Event"}</Card.Title>
         <Card.Text>
-          With supporting text below as a natural lead-in to additional content.
+          {props.data.length > 0?
+          props.data[0].description: "No Special Event, Create One"}
         </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
         <IconButton aria-label="add to favorites">
           <StarIcon />
         </IconButton>

@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Roboto:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&family=Roboto:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 .imgLogo {
-  width: 70px;
-  height: 70px;
+  width: 155px;
+  height: 155px;
+  margin-bottom: 10px;
 }
 
 #navbarScroll {
@@ -12,15 +13,14 @@
 
 .navbar-brand {
   padding: 0 !important;
+  margin-top: 75px !important;
 }
 
 .navbar {
   padding: 0 !important;
-  box-shadow: 2px 4px 5px gray;
 }
 
 .carousel {
-  margin-top: 3px;
   box-shadow: 3px 4px 5px black;
   height: 80vh;
 }
@@ -50,12 +50,11 @@
   text-decoration: none;
 }
 /* body{ background-image: linear-gradient(to top, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%); } */
-.navButton{
+.navButton {
   margin: 0 auto;
   padding-top: 32px;
+  padding-bottom: 32px;
 }
-
-
 
 .arrow {
   text-align: center;
@@ -68,7 +67,11 @@
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {
@@ -77,4 +80,26 @@
   60% {
     transform: translateY(-15px);
   }
+}
+
+footer {
+  background: #232526; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #414345,
+    #232526
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #414345,
+    #232526
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.intro-page{
+  margin-top: -85px;
+}
+
+.container-fluid{
+  height: 10vh;
 }

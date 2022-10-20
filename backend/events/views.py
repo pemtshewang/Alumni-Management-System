@@ -66,10 +66,27 @@ class EventCreateView(APIView):
         event.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class UserEventView(APIView):
+    authentication_classes = [JWTTokenUserAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
+
+    # return the events of the user by using pk
+    def get(self, request, pk, format=None):
+        events = Event.objects.all().filter(author=pk)
+        serializer = EventListSerializer(events, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def delete(self,request, pk, format=None):
+        event = Event.objects.get(pk=pk)
+        event.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class TotalEventHosterView(APIView):
     def get(self, request, format=None):
         total_event_hosters = Event.objects.values('author').distinct().count()
         return Response({"total_event_hosters": total_event_hosters}, status=status.HTTP_200_OK)
+
 
 class NotificationView(APIView):
     authentication_classes = [JWTTokenUserAuthentication]
