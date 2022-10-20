@@ -2,6 +2,8 @@ from ast import Mod
 from dataclasses import field
 from rest_framework.serializers import ModelSerializer
 from .models import Event,Notification
+from rest_framework import serializers
+
 
 """
 Serializer is used to convert the data from the database to JSON format
